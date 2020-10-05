@@ -101,6 +101,6 @@ app.get("/", async (req, res) => {
     res.send('<h5> Dashboard Coming Soon')
 });
 
-app.listen(listen(process.env.PORT || 3000), function () {
+app.listen(process.env.PORT || 3000), function () {
     console.log("Server is running on Port: " + PORT);
 });
