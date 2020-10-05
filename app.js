@@ -91,7 +91,7 @@ app.get("/:urlCode", (req, res) => {
         if (err) {
             res.send("<h6>URL expired/invalid.</h6>");
         }
-        else {
+        if (doc) {
             res.redirect(doc.originalUrl);
         }
     });
