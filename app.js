@@ -54,7 +54,7 @@ app.post("/api/v1/shorten", (req, res) => {
            });
     }
 
-    else if (validUrl.isUri(urlReceived)) {
+    if (validUrl.isUri(urlReceived)) {
 
         if (typeof(urlCode) == 'undefined') {
             urlCode = Str.random(8);
