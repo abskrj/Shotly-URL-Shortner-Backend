@@ -36,7 +36,7 @@ connection.once("open", function () {
     console.log("MongoDB database connection established successfully");
 });
 
-app.post("/api/v1/shorten", async (req, res) => {
+app.post("/api/v1/shorten", (req, res) => {
 
     let urlReceived = req.body.urlReceived;
     let urlCode = req.body.urlCode;
@@ -85,7 +85,7 @@ app.post("/api/v1/shorten", async (req, res) => {
     }
 });
 
-app.get("/:urlCode", async (req, res) => {
+app.get("/:urlCode", (req, res) => {
     urlCode = req.params.urlCode;
     URLs.findOne({urlCode: urlCode}, function (err, doc) {
         if (err) {
@@ -97,8 +97,8 @@ app.get("/:urlCode", async (req, res) => {
     });
 });
 
-app.get("/", async (req, res) => {
-    res.send('<h5> Dashboard Coming Soon')
+app.get("/", (req, res) => {
+    res.send('<h4> Dashboard Coming Soon </h4>')
 });
 
 app.listen(process.env.PORT || 3000, function () {
