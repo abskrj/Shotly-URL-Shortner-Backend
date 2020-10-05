@@ -97,8 +97,10 @@ app.get("/:urlCode", async (req, res) => {
     });
 });
 
-const PORT = 3000;
+app.get("/", async (req, res) => {
+    res.send('<h5> Dashboard Coming Soon')
+});
 
-app.listen(PORT, function () {
+app.listen(listen(process.env.PORT || 3000), function () {
     console.log("Server is running on Port: " + PORT);
 });
