@@ -42,7 +42,7 @@ app.post("/api/v1/shorten", async (req, res) => {
 
     console.log(urlReceived, urlCode);
 
-    if (typeof(urlCode) != 'undefined') {
+    if (typeof(urlCode) != 'undefined' && urlCode != "") {
         let doc = await URLs.findOne({urlCode: urlCode})
         if (doc) {
             res.statusCode = 400;
@@ -53,7 +53,7 @@ app.post("/api/v1/shorten", async (req, res) => {
 
     if (validUrl.isUri(urlReceived)) {
 
-        if (typeof(urlCode) == 'undefined') {
+        if (typeof(urlCode) == 'undefined' || urlCode == "") {
             urlCode = Str.random(8);
         }
         
@@ -65,16 +65,17 @@ app.post("/api/v1/shorten", async (req, res) => {
 
         let doc = await URLs.create(toBeInserted)
         if (doc) {
-             res.statusCode = 200;
-             res.send({
-                 statusTxt: 'URL Shorted Successfully'
-             });
+            res.statusCode = 200;
+            res.send({
+                statusTxt: 'URL Shorted Successfully',
+                shortCode: urlCode
+            });
         }
         else {
-             res.statusCode = 500;
-             res.send({
-                 statusTxt: 'Something went wrong'
-             });
+            res.statusCode = 500;
+            res.send({
+                statusTxt: 'Something went wrong'
+            });
         }
     }
     else {
