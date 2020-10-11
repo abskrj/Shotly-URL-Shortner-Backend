@@ -6,7 +6,6 @@ const URLs = require("./models");
 var bodyParser = require("body-parser");
 var validUrl = require("valid-url");
 const Str = require('@supercharge/strings');
-const { type } = require("os");
 
 dotenv.config();
 const app = express();
@@ -36,7 +35,7 @@ connection.once("open", function () {
     console.log("MongoDB database connection established successfully");
 });
 
-app.post("/api/v1/shorten", (req, res) => {
+app.post("/api/v1/shorten", async (req, res) => {
 
     let urlReceived = req.body.urlReceived;
     let urlCode = req.body.urlCode;
@@ -44,14 +43,12 @@ app.post("/api/v1/shorten", (req, res) => {
     console.log(urlReceived, urlCode);
 
     if (typeof(urlCode) != 'undefined') {
-        URLs.findOne({urlCode: urlCode}).exec()
-           .then(function(doc) {
-                if (doc) {
-                    res.statusCode = 400;
-                    res.send({statusTxt: "Short Code already present"});
-                    res.end();
-                }
-           });
+        let doc = await URLs.findOne({urlCode: urlCode})
+        if (doc) {
+            res.statusCode = 400;
+            res.send({statusTxt: "Short Code already present"});
+            res.end();
+        }
     }
 
     if (validUrl.isUri(urlReceived)) {
@@ -66,21 +63,19 @@ app.post("/api/v1/shorten", (req, res) => {
             urlCode: urlCode
         }
 
-        URLs.create(toBeInserted).exec()
-           .then(function(doc) {
-               if (doc) {
-                    res.statusCode = 200;
-                    res.send({
-                        statusTxt: 'URL Shorted Successfully'
-                    });
-               }
-               else {
-                    res.statusCode = 500;
-                    res.send({
-                        statusTxt: 'Something went wrong'
-                    });
-               }
-           })
+        let doc = await URLs.create(toBeInserted)
+        if (doc) {
+             res.statusCode = 200;
+             res.send({
+                 statusTxt: 'URL Shorted Successfully'
+             });
+        }
+        else {
+             res.statusCode = 500;
+             res.send({
+                 statusTxt: 'Something went wrong'
+             });
+        }
     }
     else {
         res.statusCode = 400;
@@ -88,17 +83,15 @@ app.post("/api/v1/shorten", (req, res) => {
     }
 });
 
-app.get("/:urlCode", function (req, res) {
+app.get("/:urlCode", async (req, res) => {
     urlCode = req.params.urlCode;
-    URLs.findOne({urlCode: urlCode}).exec()
-       .then(function(doc) {
-            if (doc) {
-                res.redirect(doc.originalUrl);
-            }
-            else {
-                res.send("URL Expired/Invalid")
-            }
-       });
+    let doc = await URLs.findOne({urlCode: urlCode})
+    if (doc) {
+        res.redirect(doc.originalUrl);
+    }
+    else {
+        res.send("URL Expired/Invalid")
+    }
 });
 
 app.get("/", function (req, res) {
