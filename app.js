@@ -6,6 +6,7 @@ const URLs = require("./models");
 var bodyParser = require("body-parser");
 var validUrl = require("valid-url");
 const Str = require('@supercharge/strings');
+var cors = require('cors')
 
 dotenv.config();
 const app = express();
@@ -14,6 +15,8 @@ app.use(logger("dev"));
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors())
+
 
 const mongoURI = process.env.MONGO_URI;
 
