@@ -48,8 +48,7 @@ app.post("/api/v1/shorten", async (req, res) => {
     if (typeof(urlCode) != 'undefined' && urlCode != "") {
         let doc = await URLs.findOne({urlCode: urlCode})
         if (doc) {
-            res.statusCode = 400;
-            res.send({statusTxt: "Short Code already present"});
+            res.send({statusTxt: "Short Code already present", statusCode:400});
             res.end();
         }
     }
@@ -68,22 +67,21 @@ app.post("/api/v1/shorten", async (req, res) => {
 
         let doc = await URLs.create(toBeInserted)
         if (doc) {
-            res.statusCode = 200;
             res.send({
                 statusTxt: 'URL Shorted Successfully',
-                shortCode: urlCode
+                shortCode: urlCode,
+                statusCode: 200
             });
         }
         else {
-            res.statusCode = 500;
             res.send({
-                statusTxt: 'Something went wrong'
+                statusTxt: 'Something went wrong',
+                statusCode: 500
             });
         }
     }
     else {
-        res.statusCode = 400;
-        res.send('URL Invalid');
+        res.send({statusTxt: 'URL Invalid', statusCode: 400});
     }
 });
 
@@ -111,7 +109,7 @@ app.get("/api/v1/count", async (req, res) => {
         res.send(doc);
     }
     else {
-        res.send({statusTxt: 'DB Error'});
+        res.send({statusTxt: 'DB Error', statusCode: 500});
     }
 });
 
