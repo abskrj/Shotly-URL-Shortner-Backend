@@ -91,6 +91,9 @@ app.get("/:urlCode", async (req, res) => {
     urlCode = req.params.urlCode;
     let doc = await URLs.findOne({urlCode: urlCode})
     if (doc) {
+        console.log(doc);
+        doc.count += 1;
+        doc.save();
         res.redirect(doc.originalUrl);
     }
     else {
@@ -100,6 +103,16 @@ app.get("/:urlCode", async (req, res) => {
 
 app.get("/", function (req, res) {
     res.send('<h4> Dashboard Coming Soon </h4>')
+});
+
+app.get("/api/v1/count", async (req, res) => {
+    let doc = await URLs.aggregate([{$group: {_id: '', count: {$sum: '$count'}}}]);
+    if (doc) {
+        res.send(doc);
+    }
+    else {
+        res.send({statusTxt: 'DB Error'});
+    }
 });
 
 app.listen(process.env.PORT || 3000, function () {
