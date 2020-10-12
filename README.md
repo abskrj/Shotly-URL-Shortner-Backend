@@ -2,8 +2,8 @@
 
 LIVE Preview: https://codedoc.herokuapp.com
 
-NOTE: This is Backend of the WebApp.
-Frontend: https://github.com/abhishekraj272/Shotly-URL-Shortner-Frontend
+NOTE: This is Backend of the WebApp, Click on the below link to view frontend.
+Frontend: [Click Here](https://github.com/abhishekraj272/Shotly-URL-Shortner-Frontend)
 
 ## Tools Used
 1. ExpressJS
