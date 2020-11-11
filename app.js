@@ -100,7 +100,7 @@ app.get("/:urlCode", async (req, res) => {
 });
 
 app.get("/", function (req, res) {
-    res.send('<h4> Dashboard Coming Soon </h4>')
+    res.redirect('https://app.codedoc.tech');
 });
 
 app.get("/api/v1/count", async (req, res) => {
