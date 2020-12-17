@@ -1,6 +1,6 @@
 # Sotly URL Shortner
 
-LIVE Preview: https://codedoc.herokuapp.com
+LIVE Preview: https://app.codedoc.tech
 
 NOTE: This is Backend of the WebApp, Click on the below link to view frontend.
 Frontend: [Click Here](https://github.com/abhishekraj272/Shotly-URL-Shortner-Frontend)
