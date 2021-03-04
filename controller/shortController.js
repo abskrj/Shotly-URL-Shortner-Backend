@@ -58,7 +58,7 @@ exports.urlRedirect = async (req, res) => {
         doc.count += 1;
         doc.save();
         res.redirect(doc.originalUrl);
-        parseReq(req.doc._id);
+        parseReq(req, doc._id);
     }
     else {
         res.send("URL Expired/Invalid")

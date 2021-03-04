@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 let ANALYTICS = new Schema(
     {
-        owner: {
+        urlId: {
             type: Schema.Types.ObjectId,
             ref: 'URLs'
         },
