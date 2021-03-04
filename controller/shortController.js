@@ -34,6 +34,7 @@ exports.shortUrl = async (req, res) => {
         if (doc) {
             res.send({
                 statusTxt: 'URL Shorted Successfully',
+                urlID: doc._id,
                 shortCode: urlCode,
                 statusCode: 200
             });
