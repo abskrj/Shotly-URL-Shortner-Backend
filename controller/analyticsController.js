@@ -13,6 +13,13 @@ exports.getAllCount = async (req, res) => {
     }
 }
 
+let obfuscateIp = (ip) => {
+    ip = ip.split('.');
+    ip = ip.splice(0, ip.length-1);
+    ip = ip.join('.');
+    return ip+".***";
+}
+
 exports.getUrlAnalytics = async (req, res) => {
     const uId = req.query.uId || null;
 
@@ -26,5 +33,7 @@ exports.getUrlAnalytics = async (req, res) => {
         res.status(404).send({message: "Invalid Analytics ID"});
     }
 
+    let obfuscatedIp = doc.ip.map(data => obfuscateIp(data));
+    doc.ip = obfuscatedIp
     res.send(doc);
 }
