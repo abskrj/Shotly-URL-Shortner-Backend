@@ -7,6 +7,7 @@ const { parseReq } = require("../helper");
 exports.shortUrl = async (req, res) => {
     let urlReceived = req.body.urlReceived;
     let urlCode = req.body.urlCode;
+    const isFile = req.body.isFile ? true : false;
 
     console.log(urlReceived, urlCode);
 
@@ -27,7 +28,8 @@ exports.shortUrl = async (req, res) => {
         let toBeInserted = {
             originalUrl: urlReceived,
             shortUrl: `https://${req.headers.host}/${urlCode}`,
-            urlCode: urlCode
+            urlCode: urlCode,
+            isFile: isFile
         }
 
         let doc = await URLs.create(toBeInserted)

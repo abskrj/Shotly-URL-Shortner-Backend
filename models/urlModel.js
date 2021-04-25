@@ -23,6 +23,10 @@ let URLs = new Schema(
             type: Date,
             default: Date.now
         },
+        isFile: {
+            type: Boolean,
+            default: false
+        },
         count: {
             type: Number,
             default: 0
